@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "bin": {
-    "coindex": "./bin/coindex.js"
+    "todo": "./bin/todo.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,6 +18,7 @@
     "dotenv": "^16.4.1",
     "figlet": "^1.7.0",
     "inquirer": "^9.2.13",
+    "knex": "^3.1.0",
     "lodash": "^4.17.21",
     "node-notifier": "^10.0.1",
     "sqlite3": "^5.1.7"

@@ -10,3 +10,4 @@ packages
 - dotenv
 - node-notifier
 - lodash
+- knexjs
