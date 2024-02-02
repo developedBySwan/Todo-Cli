@@ -6,7 +6,7 @@ program
     .command('list', 'Get List Of Todos')
     .action(async () => {
         try {
-            console.log(await list());
+            return await list()
         } catch (error) {
             console.error('Error:', error);
         }
