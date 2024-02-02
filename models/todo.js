@@ -10,4 +10,8 @@ export default class Todo {
             throw error; // Rethrow the error to propagate it to the caller
         }
     }
+
+    static async setTask(tasks) {
+        return await db('tasks').insert(tasks);
+    }
 }
