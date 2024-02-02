@@ -4,28 +4,10 @@ import Table from "cli-table";
 import { isRequired } from "../utils/validation.js";
 import todo from "../models/todo.js";
 
-export default async function setTask() {
+const setTask = async function() {
     console.log(chalk.red("Set Todo Tasks"))
     try {
-        const answers = await inquirer.prompt([
-            {
-                type: 'input',
-                name: 'name',
-                message: 'Enter Type Name:',
-                validate: isRequired,
-            },
-            {
-                type: 'input',
-                name: 'description',
-                message: 'Enter your task description:'
-            },
-            {
-                type: 'list',
-                name: 'priority_level',
-                message: 'Choose your Priority Level',
-                choices: ['Low', 'Medium', 'High']
-            }
-        ]);
+        const answers = await getPromptInputData();
 
         const data = {
             "name": answers.name,
@@ -34,6 +16,7 @@ export default async function setTask() {
         };
 
         await todo.setTask(data);
+        
         console.log(generateTable(data));
     } catch (error) {
         console.error('Error:', error);
@@ -52,3 +35,27 @@ function generateTable(data) {
     
     return table.toString();
 }
+
+async function getPromptInputData() {
+    return await inquirer.prompt([
+        {
+            type: 'input',
+            name: 'name',
+            message: 'Enter Type Name:',
+            validate: isRequired,
+        },
+        {
+            type: 'input',
+            name: 'description',
+            message: 'Enter your task description:'
+        },
+        {
+            type: 'list',
+            name: 'priority_level',
+            message: 'Choose your Priority Level',
+            choices: ['Low', 'Medium', 'High']
+        }
+    ]);
+}
+
+export default setTask;
