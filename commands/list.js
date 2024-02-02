@@ -11,7 +11,7 @@ const todoLists = async function () {
             return chalk.red("No tasks found.");
         }
 
-        console.log(generateTable(tasks).toString());
+        displayTasks(tasks);
 
         await viewDetailTask(tasks);
     } catch (error) {
@@ -19,6 +19,12 @@ const todoLists = async function () {
         return null;
     }
 }
+
+function displayTasks(tasks) {
+    const table = generateTable(tasks);
+    console.log(table.toString());
+}
+
 
 function generateTable(tasks) {
     try {
@@ -64,7 +70,7 @@ function getPriorityColor(priorityLevel) {
 
 async function viewDetailTask(tasks) {
     const choices = tasks.map(task => ({
-        name: chalk.red(task.id)+" "+chalk.blue(task.name),
+        name: `${chalk.red(task.id)} ${chalk.blue(task.name)}`,
         value: task
     }));
 
@@ -75,13 +81,17 @@ async function viewDetailTask(tasks) {
         choices: choices
     });
 
+    displayTaskDetail(selectedTask);
+}
+
+function displayTaskDetail(task) {
     console.log(chalk.green("Task Details:"));
-    console.log(chalk.blue("id : "), selectedTask.id);
-    console.log(chalk.blue("name : "), selectedTask.name);
-    console.log(chalk.blue("description : "), selectedTask.description);
-    console.log(chalk.blue("is_done : "), selectedTask.is_doned ? "✅" : "🛑");
-    console.log(chalk.blue("priority_level : "), getPriorityColor(selectedTask.priority_level));
-    console.log(chalk.blue("done_at : "), selectedTask.done_at ? selectedTask.done_at.toString() : "-" );
+    console.log(chalk.blue("ID: "), task.id);
+    console.log(chalk.blue("Name: "), task.name);
+    console.log(chalk.blue("Description: "), task.description || "N/A");
+    console.log(chalk.blue("Status: "), task.is_doned ? "Completed" : "Incomplete");
+    console.log(chalk.blue("Priority Level: "), getPriorityColor(task.priority_level));
+    console.log(chalk.blue("Finished Date Time: "), task.done_at ? task.done_at.toString() : "N/A");
 }
 
 export default todoLists;
