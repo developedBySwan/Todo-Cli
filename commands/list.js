@@ -3,9 +3,9 @@ import Table from "cli-table";
 import chalk from "chalk";
 import inquirer from "inquirer";
 
-const todoLists = async function () {
+const todoLists = async function (pageNumber = 1, pageSize = 3) {
     try {
-        const tasks = await todo.getAll();
+        const tasks = await todo.getAll(pageNumber,pageSize);
 
         if (tasks.length === 0) {
             return chalk.red("No tasks found.");
@@ -24,7 +24,6 @@ function displayTasks(tasks) {
     const table = generateTable(tasks);
     console.log(table.toString());
 }
-
 
 function generateTable(tasks) {
     try {

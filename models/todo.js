@@ -1,9 +1,14 @@
 import db from "../database/db.js";
 
 export default class Todo {
-    static async getAll() {
+    static async getAll(pageNumber,pageSize) {
         try {
-            return await db('tasks').select('*');
+            const offset = (pageNumber - 1) * pageSize;
+            return await db('tasks')
+                .select('*')
+                .orderBy('created_at', 'desc')
+                .limit(pageSize)
+                .offset(offset);
         } catch (error) {
             // Handle the error
             console.error('Error fetching tasks:', error);
