@@ -11,7 +11,7 @@ const todoLists = async function (pageNumber = 1, pageSize = 5) {
             return chalk.red("No tasks found.");
         }
 
-        const totalCount = await todo.countTasks();
+        const totalCount = await todo.countTasks();        const totalCount = await todo.countTasks();
         console.log(chalk.blue(`Total Count: ${totalCount} | Current Page: ${pageNumber}`));
 
         displayTasks(tasks);

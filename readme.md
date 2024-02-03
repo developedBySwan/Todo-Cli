@@ -1,13 +1,23 @@
 ## Todo cmd
+Command line interface written in Node.js about Todo
 
-packages
+### Usage
 
-- sqlite3
-- Commander
-- Inquirer.js
-- chalk 
-- figlet
-- dotenv
-- node-notifier
-- lodash
-- knexjs
+```
+npm install
+
+npm link
+```
+
+### command
+
+```
+# Help
+todo --help
+
+# set task
+todo set
+
+# tasks list
+todo list
+```
