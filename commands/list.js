@@ -3,13 +3,16 @@ import Table from "cli-table";
 import chalk from "chalk";
 import inquirer from "inquirer";
 
-const todoLists = async function (pageNumber = 1, pageSize = 3) {
+const todoLists = async function (pageNumber = 1, pageSize = 5) {
     try {
         const tasks = await todo.getAll(pageNumber,pageSize);
 
         if (tasks.length === 0) {
             return chalk.red("No tasks found.");
         }
+
+        const totalCount = await todo.countTasks();
+        console.log(chalk.blue(`Total Count: ${totalCount} | Current Page: ${pageNumber}`));
 
         displayTasks(tasks);
 

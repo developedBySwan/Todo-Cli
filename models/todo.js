@@ -10,9 +10,21 @@ export default class Todo {
                 .limit(pageSize)
                 .offset(offset);
         } catch (error) {
-            // Handle the error
             console.error('Error fetching tasks:', error);
-            throw error; // Rethrow the error to propagate it to the caller
+            throw error;
+        }
+    }
+
+    static async countTasks() {
+        try {
+            return db('tasks')
+                    .count()
+                    .then((result) => {
+                        return result[0]['count(*)'];
+                    });
+        } catch (error) {
+            console.error('Error fetching tasks:', error);
+            throw error;
         }
     }
 
