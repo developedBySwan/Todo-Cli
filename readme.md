@@ -7,7 +7,17 @@ Command line interface written in Node.js about Todo
 npm install
 
 npm link
+
 ```
+
+create database at root folder 
+
+and run 
+
+```
+knex migrate:latest
+```
+
 
 ### command
 
