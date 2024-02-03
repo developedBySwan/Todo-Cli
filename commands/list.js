@@ -3,15 +3,16 @@ import Table from "cli-table";
 import chalk from "chalk";
 import inquirer from "inquirer";
 
-const todoLists = async function (pageNumber = 1, pageSize = 5) {
+const todoLists = async function (pageNumber = 1, pageSize = 5, is_done = null, search = null) {
     try {
-        const tasks = await todo.getAll(pageNumber,pageSize);
+        const tasks = await todo.getAll(pageNumber, pageSize, is_done, search);
 
         if (tasks.length === 0) {
-            return chalk.red("No tasks found.");
+            console.log(chalk.red("No tasks found."));
+            return null;
         }
 
-        const totalCount = await todo.countTasks();        const totalCount = await todo.countTasks();
+        const totalCount = await todo.countTasks(is_done, search);
         console.log(chalk.blue(`Total Count: ${totalCount} | Current Page: ${pageNumber}`));
 
         displayTasks(tasks);

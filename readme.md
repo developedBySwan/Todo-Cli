@@ -9,7 +9,6 @@ npm install
 npm link
 
 ```
-
 create database at root folder 
 
 and run 
