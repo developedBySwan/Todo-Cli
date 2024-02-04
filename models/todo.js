@@ -48,4 +48,13 @@ export default class Todo {
             queryBuilder.where('name', 'like', `%${search}%`);
         }
     }
+
+    static async doneTask(taskId) {
+        return (await db('tasks')
+                    .where('id',taskId)
+                    .update({
+                        is_doned: db.raw('NOT ??', ['is_doned']),
+                        done_at:  db.raw('CASE WHEN is_doned THEN NULL ELSE datetime("now") END')
+                    }));
+    }
 }

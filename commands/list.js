@@ -2,6 +2,7 @@ import todo from "../models/todo.js";
 import Table from "cli-table";
 import chalk from "chalk";
 import inquirer from "inquirer";
+import db from "../database/db.js";
 
 const todoLists = async function (pageNumber = 1, pageSize = 5, is_done = null, search = null) {
     try {
@@ -33,7 +34,7 @@ function generateTable(tasks) {
     try {
         const table = new Table({
             head: ['Task Name', 'Priority','is Done','Finished Date Time'],
-            colWidths: [20, 20, 10, 20],
+            colWidths: [20, 20, 20, 20],
             wordWrap: true,
             wrapOnWordBoundary: false,
         })
@@ -41,7 +42,7 @@ function generateTable(tasks) {
         tasks.forEach(task => {
             const priorityColor = getPriorityColor(task.priority_level);
             const statusIcon = task.is_doned ? "✅" : "🛑";
-            const finishedDateTime = task.done_at ? task.done_at.toString() : "-";
+            const finishedDateTime = task.done_at ? new Date(task.done_at).toDateString() : "N/A";
             
             table.push([
                 task.name,
@@ -87,14 +88,32 @@ async function viewDetailTask(tasks) {
     displayTaskDetail(selectedTask);
 }
 
-function displayTaskDetail(task) {
+async function displayTaskDetail(task) {
     console.log(chalk.green("Task Details:"));
     console.log(chalk.blue("ID: "), task.id);
     console.log(chalk.blue("Name: "), task.name);
     console.log(chalk.blue("Description: "), task.description || "N/A");
     console.log(chalk.blue("Status: "), task.is_doned ? "Completed" : "Incomplete");
     console.log(chalk.blue("Priority Level: "), getPriorityColor(task.priority_level));
-    console.log(chalk.blue("Finished Date Time: "), task.done_at ? task.done_at.toString() : "N/A");
+    console.log(chalk.blue("Finished Date Time: "), task.done_at ?  new Date(task.done_at) : "N/A");
+
+    const message = task.is_doned ? "Wanna undone?" : "Are you done?";
+
+   await inquirer.prompt([
+    {
+      type: 'confirm',
+      name: 'confirmed',
+      message: message
+    }
+  ])
+  .then(async (answers) => {
+      if (answers.confirmed) {
+        await todo.doneTask(task.id);
+        console.log('doned...');
+      } else {
+            console.log('cancled...');
+        }
+  });
 }
 
 export default todoLists;
