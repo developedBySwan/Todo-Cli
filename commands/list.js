@@ -126,6 +126,7 @@ async function displayTaskDetail(task) {
       } else {
         console.log("canceled...");
       }
+      process.exit();
     });
 }
 
